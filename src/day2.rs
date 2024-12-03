@@ -19,10 +19,10 @@ pub fn extract_reports(file_path: &str) -> Vec<Vec<i32>> {
     reports
 }
 
-pub fn count_safe_reports(reports: &Vec<Vec<i32>>) -> i32 {
+pub fn find_safe_reports(reports: &Vec<Vec<i32>>) -> i32 {
     let mut safe_reports = 0;
     for report in reports {
-        if is_safe_report(report) {
+        if is_report_safe(report) {
             safe_reports += 1;
         } else {
             if apply_problem_dampener(report) {
@@ -38,14 +38,14 @@ fn apply_problem_dampener(report: &Vec<i32>) -> bool {
         let mut cloned_report = report.clone();
         cloned_report.remove(i);
 
-        if is_safe_report(&cloned_report) {
+        if is_report_safe(&cloned_report) {
             return true;
         }
     }
     false
 }
 
-fn is_safe_report(report: &Vec<i32>) -> bool {
+fn is_report_safe(report: &Vec<i32>) -> bool {
     if report.len() < 2 {
         return  false;
     }

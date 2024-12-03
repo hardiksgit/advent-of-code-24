@@ -2,14 +2,14 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::collections::HashMap;
 
-pub fn extract_numbers(file_path: &str) -> Vec<i32> {
+pub fn extract_locations(file_path: &str) -> Vec<i32> {
     let mut location_ids = Vec::new();
     if let Ok(file) = File::open(file_path) {
         for line in io::BufReader::new(file).lines() {
             if let Ok(content) = line {
-                for num_str in content.split_whitespace() {
-                    if let Ok(num) = num_str.parse::<i32>() {
-                        location_ids.push(num);
+                for location_str in content.split_whitespace() {
+                    if let Ok(location) = location_str.parse::<i32>() {
+                        location_ids.push(location);
                     }
                 }
             }
