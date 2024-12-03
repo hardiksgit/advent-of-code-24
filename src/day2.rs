@@ -24,12 +24,28 @@ pub fn count_safe_reports(reports: &Vec<Vec<i32>>) -> i32 {
     for report in reports {
         if is_safe_report(report) {
             safe_reports += 1;
+        } else {
+            if apply_problem_dampener(report) {
+                safe_reports += 1;
+            }
         }
     }
     safe_reports
 }
 
-pub fn is_safe_report(report: &Vec<i32>) -> bool {
+fn apply_problem_dampener(report: &Vec<i32>) -> bool {
+    for i in 0..report.len() {
+        let mut cloned_report = report.clone();
+        cloned_report.remove(i);
+
+        if is_safe_report(&cloned_report) {
+            return true;
+        }
+    }
+    false
+}
+
+fn is_safe_report(report: &Vec<i32>) -> bool {
     if report.len() < 2 {
         return  false;
     }
